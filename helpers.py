@@ -19,30 +19,27 @@ def get_reddit_client():
     return reddit
 
 
-def get_posts( subreddit : int = 'nottheonion', limit: int = 20):
+def get_posts( reddit, subreddit : int = 'nottheonion', limit: int = 20):
+    print (limit)
     subreddit = reddit.subreddit(subreddit)
-    posts = [post for post in subreddit.top(limit=20, time_filter="month")]
+    posts = [post for post in subreddit.top(limit=limit, time_filter="month")]
     return posts
-reddit = get_reddit_client()
-posts = get_posts()
 
-for p in posts:
-    print(p.title)
-    print(p.url)
-    break
-    
-p.url
-reddit = get_reddit_client()
-posts = get_posts()
-posts
-for p in posts:
-    print(f'{p.title}\n {("=" * 20 )} \n{p.url}')
-    print('=' * 20)
-    metadata = opengraph.get_site_info(p.url)
-    og = metadata['openGraph']
-    for key, value in og.items():
-        print( f' {key} : {value}')
 
-    print('\n\n')
-    input()
-    
+if __name__ == "__main__":
+        
+    reddit = get_reddit_client()
+    posts = get_posts()
+
+    for p in posts:
+        print(f'{p.title}\n {("=" * 20 )} \n{p.url}')
+        print('=' * 20)
+        metadata = opengraph.get_site_info(p.url)
+        og = metadata['openGraph']
+        for key, value in og.items():
+            print( f' {key} : {value}')
+
+        print('\n\n')
+        input()
+
+        
